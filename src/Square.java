@@ -1,7 +1,8 @@
-public class Square extends  Polygon
+public class Square extends Shape implements  Polygon
 {
     private double length; //side length, 4 equal sides
-    private final int numberOfSides = 4;
+    private static final int numberOfSides = 4;
+    private static final int numberOfCorners = 4;
 
     public Square(String name,double length)
     {
@@ -20,6 +21,11 @@ public class Square extends  Polygon
 
     public void setLength(double length) {
         this.length = length;
+    }
+
+    @Override
+    public int getNumberOfCorners() {
+        return numberOfCorners;
     }
 
     public double getArea(){

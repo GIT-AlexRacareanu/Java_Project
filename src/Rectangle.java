@@ -1,8 +1,9 @@
-public class Rectangle extends Polygon
+public class Rectangle extends Shape implements Polygon
 {
     private double length; //side length, 2 equal sides
     private double width; //side width, 2 equal sides
-    private final int numberOfSides = 4;
+    private static final int numberOfSides = 4;
+    private static final int numberOfCorners = 4;
 
     public Rectangle(String name,double length,double width){
         this.length=length;
@@ -13,6 +14,11 @@ public class Rectangle extends Polygon
 
     public int getNumberOfSides() {
         return numberOfSides;
+    }
+
+    @Override
+    public int getNumberOfCorners() {
+        return numberOfCorners;
     }
 
     public double getLength() {

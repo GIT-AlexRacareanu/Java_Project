@@ -1,9 +1,5 @@
-public abstract class Polygon extends Shape {
+public interface Polygon {
 
-    private final int numberOfCorners = getNumberOfSides(); //kind of a setter
-
-    public int getNumberOfCorners() { //basic getter
-        return numberOfCorners;
-    }
+    public int getNumberOfCorners ();
 
 }
