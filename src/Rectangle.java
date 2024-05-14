@@ -1,4 +1,4 @@
-public class Rectangle extends Shape
+public class Rectangle extends Polygon
 {
     private double length; //side length, 2 equal sides
     private double width; //side width, 2 equal sides

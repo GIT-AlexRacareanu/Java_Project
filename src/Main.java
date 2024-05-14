@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Area is: " + testSquare.getArea() + " centimeters^2");
         //final test
         System.out.println(testSquare.toString());
-        System.out.println("");//newline
+        System.out.println();//newline
         Rectangle testRectangle = new Rectangle("football field", 100000, 50000);
         System.out.println("rectangle's name is: " + testRectangle.getName());
         System.out.println("rectangle's length is: " + testRectangle.getLength() + " centimeters");
@@ -27,7 +27,7 @@ public class Main {
         System.out.println("Area is: " + testRectangle.getArea() + " centimeters^2");
         //final test
         System.out.println(testRectangle.toString());
-        System.out.println("");//newline
+        System.out.println();//newline
         Circle testCircle = new Circle("tire", 40);
         System.out.println("circle's name is: " + testCircle.getName());
         System.out.println("circle's radius is: " + testCircle.getRadius() + " centimeters");
@@ -40,7 +40,7 @@ public class Main {
         //final test
         System.out.println(testCircle.toString());
         //////////////////////////////////////////////////
-        System.out.println("");//newline
+        System.out.println();//newline
         Canvas shapeList = new Canvas();
         shapeList.addShape(testCircle);
         shapeList.addShape(testRectangle);
@@ -50,16 +50,27 @@ public class Main {
         shapeList.addShape(new Circle("Bicycle Wheel", 61.9));
         System.out.println(shapeList.howMany());
         //second test
-        System.out.println("");//newline
-        shapeList.setShapes(new ArrayList<Shape>()); //free list and test
+        System.out.println();//newline
+        shapeList.setShapes(new ArrayList<>()); //free list and test
         System.out.println(shapeList.howMany());
         //last test
-        System.out.println("");//newline
+        System.out.println();//newline
         shapeList.addShape(testCircle);
         shapeList.addShape(testRectangle);
         shapeList.addShape(testSquare);
         Canvas shapeList2 = new Canvas();
         shapeList2.setShapes(shapeList.getShapes());//final test for getter and setter
         System.out.println(shapeList2.howMany());
+        //POLYGON TEST
+        System.out.println();//newline
+        Canvas shapeList3 = new Canvas();
+        Canvas shapeList4 = new Canvas();
+        shapeList3.addCornerShape(testRectangle);
+        System.out.println("~~trying the first list of corner shapes->");
+        shapeList3.printCornerShapes();
+        shapeList4.setCornerShapes(shapeList3.getCornerShapes());
+        shapeList3.addCornerShape(testSquare);//add another element to list and look at the difference
+        System.out.println("~trying the second list of corner shapes->");
+        shapeList4.printCornerShapes();
     }
 }

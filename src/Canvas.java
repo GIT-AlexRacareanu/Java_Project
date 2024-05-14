@@ -1,11 +1,15 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Canvas {
 
     private ArrayList<Shape> shapes;
 
+    private List<Polygon> cornerShapes;
+
     public Canvas(){
         shapes = new ArrayList<>();
+        cornerShapes = new ArrayList<>();
     }
 
     public ArrayList<Shape> getShapes() {
@@ -18,6 +22,27 @@ public class Canvas {
 
     public void addShape(Shape shape){
         shapes.add(shape);
+    }
+
+    public List<Polygon> getCornerShapes() {
+        return cornerShapes;
+    }
+
+    public void setCornerShapes(List<Polygon> cornerShapes) {
+        this.cornerShapes = cornerShapes;
+    }
+
+    public void addCornerShape(Polygon polygon)
+    {
+        cornerShapes.add(polygon);
+    }
+
+    public void printCornerShapes ()
+    {
+        for(Polygon polygon : cornerShapes)
+        {
+            System.out.println("This is a " + polygon.getClass().getName() + " and it has " + polygon.getNumberOfCorners() + " corners");
+        }
     }
 
     public String howMany(){

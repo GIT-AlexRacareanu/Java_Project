@@ -1,4 +1,4 @@
-public class Square extends  Shape
+public class Square extends  Polygon
 {
     private double length; //side length, 4 equal sides
     private final int numberOfSides = 4;
