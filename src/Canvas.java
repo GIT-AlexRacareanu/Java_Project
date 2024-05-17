@@ -3,14 +3,22 @@ import java.util.List;
 
 public class Canvas {
 
-    private ArrayList<Shape> shapes;
+    private ArrayList<Shape> shapes; //private feature
 
-    private List<Polygon> cornerShapes;
+    private List<Polygon> cornerShapes;//private feature
 
-    public Canvas(){
+    private static final Canvas uniqueCanvas = new Canvas();//the one and only canvas instance
+
+    private Canvas(){ //private constructor for preventing the creation of another canvas instance
         shapes = new ArrayList<>();
         cornerShapes = new ArrayList<>();
     }
+
+    public static Canvas getCanvas() { //finally,the public getter for using the unique instance outside of this class
+        return uniqueCanvas;
+    }
+
+    ////////methods continue to be public, so we can use them out of the class
 
     public ArrayList<Shape> getShapes() {
         return shapes;
@@ -24,6 +32,13 @@ public class Canvas {
         shapes.add(shape);
     }
 
+    public void printContent() {
+        for(Shape shape: shapes)
+        {
+            System.out.println(shape.toString());
+        }
+    }
+
     public List<Polygon> getCornerShapes() {
         return cornerShapes;
     }
@@ -32,13 +47,11 @@ public class Canvas {
         this.cornerShapes = cornerShapes;
     }
 
-    public void addCornerShape(Polygon polygon)
-    {
+    public void addCornerShape(Polygon polygon) {
         cornerShapes.add(polygon);
     }
 
-    public void printCornerShapes ()
-    {
+    public void printCornerShapes () {
         for(Polygon polygon : cornerShapes)
         {
             System.out.println("This is a " + polygon.getClass().getName() + " and it has " + polygon.getNumberOfCorners() + " corners");

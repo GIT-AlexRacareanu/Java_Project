@@ -1,5 +1,5 @@
 public interface Polygon {
 
-    public int getNumberOfCorners ();
+    int getNumberOfCorners ();
 
 }

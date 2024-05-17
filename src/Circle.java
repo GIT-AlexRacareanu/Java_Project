@@ -1,7 +1,7 @@
 public class Circle extends Shape
 {
     private double radius;
-    private final int numberOfSides = 0;
+    private static final int numberOfSides = 0;
 
     public Circle(String name,double radius){
         this.radius=radius;

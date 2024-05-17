@@ -43,6 +43,6 @@ public class Rectangle extends Shape implements Polygon
 
     @Override
     public String toString(){
-        return "This is a "+ this.name +" and it has " +  this.numberOfSides + " sides, 2 of  " +length+ " centimeters, and two of  " + this.width + " centimeters";
+        return "This is a "+ this.name +" and it has " +  numberOfSides + " sides, two of  " +length+ " centimeters, and two of  " + this.width + " centimeters";
     }
 }
