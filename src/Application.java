@@ -1,10 +1,11 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public final class Application {
 
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
-    public static void runApp() throws InterruptedException {
+    public static void runApp() throws InterruptedException, IOException, ClassNotFoundException {
         System.out.println("----------------------------------------MENU----------------------------------------");
         System.out.println("1.Create a shape");
         System.out.println("2.Show canvas content");
@@ -29,7 +30,7 @@ public final class Application {
                         createCircle();
                         break;
                     default://error
-                        jumpOut();
+                        System.out.println("//////////////////////////////////////////////////////////////////////////////");
                         System.out.println("Wrong input!!!!");
                         redirect();
                         break;
@@ -37,7 +38,7 @@ public final class Application {
                 break;
             case 2:
                 System.out.println("-----------------------------------LISTING_MENU--------------------------------------");
-                if(Canvas.getCanvas().getShapes().isEmpty()) {
+                if(Canvas.getInstance().getShapes().isEmpty()) {
                     System.out.println("The list is empty! Try adding some shapes.");
                     redirect();
                     break;
@@ -51,16 +52,16 @@ public final class Application {
                     {
                          case 1:
                              System.out.println("There is the content you added:");
-                             Canvas.getCanvas().printContent();//all the shapes,including circles
+                             Canvas.getInstance().printContent();//all the shapes,including circles
                              redirect();
                              break;
                          case 2:
-                             if(Canvas.getCanvas().getCornerShapes().isEmpty()) {
+                             if(Canvas.getInstance().getCornerShapes().isEmpty()) {
                                  System.out.println("The list is empty! Try adding some cornered shapes.");
                              }
                              else {
                                 System.out.println("There is the content you added:");
-                                Canvas.getCanvas().printCornerShapes();//only the cornered ones
+                                Canvas.getInstance().printCornerShapes();//only the cornered ones
                              }
                              redirect();
                              break;
@@ -71,8 +72,7 @@ public final class Application {
                 }
                 break;
             case 3:
-                System.out.print("The program will close soon");
-                loading();
+                closeApp();
                 break;
             default:
                 System.out.println("Wrong input!!!!");
@@ -82,20 +82,20 @@ public final class Application {
 
     }
 
-    public static void createSquare() throws InterruptedException {
+    public static void createSquare() throws InterruptedException, IOException, ClassNotFoundException {
         System.out.println("---------------------------------SQUARE_CREATION_MENU-------------------------------");
         System.out.println("A square needs a name and a length");
         System.out.println("introduce the name:");
         String name = input.next();
         System.out.println("introduce the length(centimeters):");
         double length = input.nextDouble();
-        Canvas.getCanvas().addShape(new Square(name,length));
-        Canvas.getCanvas().addCornerShape(new Square(name,length));
+        Canvas.getInstance().addShape(new Square(name,length));
+        Canvas.getInstance().addCornerShape(new Square(name,length));
         System.out.println("Shape added!");
         redirect();
     }
 
-    public static void createRectangle() throws InterruptedException {
+    public static void createRectangle() throws InterruptedException, IOException, ClassNotFoundException {
         System.out.println("-------------------------------RECTANGLE_CREATION_MENU------------------------------");
         System.out.println("A rectangle needs a name,a length,and a width");
         System.out.println("introduce the name:");
@@ -104,20 +104,20 @@ public final class Application {
         double length = input.nextDouble();
         System.out.println("introduce the width(centimeters):");
         double width = input.nextDouble();
-        Canvas.getCanvas().addShape(new Rectangle(name,length,width));
-        Canvas.getCanvas().addCornerShape(new Rectangle(name,length,width));
+        Canvas.getInstance().addShape(new Rectangle(name,length,width));
+        Canvas.getInstance().addCornerShape(new Rectangle(name,length,width));
         System.out.println("Shape added");
         redirect();
     }
 
-    public static void createCircle() throws InterruptedException {
+    public static void createCircle() throws InterruptedException, IOException, ClassNotFoundException {
         System.out.println("------------------------------CIRCLE_CREATION_MENU----------------------------");
         System.out.println("A circle needs a name and a radius");
         System.out.println("introduce the name:");
         String name = input.next();
         System.out.println("introduce the radius(centimeters):");
         double radius = input.nextDouble();
-        Canvas.getCanvas().addShape(new Circle(name,radius));
+        Canvas.getInstance().addShape(new Circle(name,radius));
         System.out.println("Shape added");
         redirect();
     }
@@ -131,7 +131,7 @@ public final class Application {
         System.out.println();//newline
     }
 
-    public static void redirect() throws InterruptedException {
+    public static void redirect() throws InterruptedException, IOException, ClassNotFoundException {
         System.out.println("Would you like to continue?");
         System.out.println("1.Yes");
         System.out.println("2.No");
@@ -143,8 +143,7 @@ public final class Application {
                 runApp();
                 break;
             case 2://end app
-                System.out.print("The app will close soon");
-                loading();
+                closeApp();
                 break;
             default://error
                 System.out.println("Wrong input,try again!");
@@ -154,7 +153,9 @@ public final class Application {
 
     }
 
-    public static void jumpOut() {
-        System.out.println("///////////////////////////////////////////////////////////////////////////////////////");
+    public static void closeApp() throws InterruptedException {
+        Canvas.getInstance().saveShapes();
+        System.out.print("The program will close soon");
+        loading();
     }
 }

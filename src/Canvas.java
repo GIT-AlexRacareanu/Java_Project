@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,18 +8,20 @@ public class Canvas {
 
     private List<Polygon> cornerShapes;//private feature
 
-    private static final Canvas uniqueCanvas = new Canvas();//the one and only canvas instance
+    private static Canvas uniqueCanvas = null;//the one and only canvas instance
 
-    private Canvas(){ //private constructor for preventing the creation of another canvas instance
-        shapes = new ArrayList<>();
-        cornerShapes = new ArrayList<>();
+    private Canvas() { //public constructor for instantiating only once
+            shapes = new ArrayList<>();
+            cornerShapes = new ArrayList<>();
     }
 
-    public static Canvas getCanvas() { //finally,the public getter for using the unique instance outside of this class
+    public static Canvas getInstance() {
+        if(uniqueCanvas==null)
+            uniqueCanvas = new Canvas();
         return uniqueCanvas;
     }
 
-    ////////methods continue to be public, so we can use them out of the class
+    ////////methods continue to be public, so we can use them outside the class
 
     public ArrayList<Shape> getShapes() {
         return shapes;
@@ -28,13 +31,12 @@ public class Canvas {
         this.shapes = shapes;
     }
 
-    public void addShape(Shape shape){
-        shapes.add(shape);
+    public void addShape(Shape shape) {
+       shapes.add(shape);
     }
 
-    public void printContent() {
-        for(Shape shape: shapes)
-        {
+    public void printContent()  {
+        for(Shape shape : shapes){
             System.out.println(shape.toString());
         }
     }
@@ -51,7 +53,7 @@ public class Canvas {
         cornerShapes.add(polygon);
     }
 
-    public void printCornerShapes () {
+    public void printCornerShapes() {
         for(Polygon polygon : cornerShapes)
         {
             System.out.println("This is a " + polygon.getClass().getName() + " and it has " + polygon.getNumberOfCorners() + " corners");
@@ -76,6 +78,30 @@ public class Canvas {
             }
         }
         return "we've got " + nrSquares + " Squares," + nrRectangles + " Rectangles and " + nrCircles + " Circles";
+    }
+
+    public void saveShapes() {
+         try
+         {
+             FileOutputStream fos = new FileOutputStream("C://Users//racar//IdeaProjects//Trial_Problem//src//database.txt");
+             ObjectOutputStream out = new ObjectOutputStream(fos);//store data into file
+             out.writeObject(shapes);
+             out.close();
+         }catch(Exception e){
+             System.out.println("error");
+         }
+    }
+
+    public void loadShapes(){
+        try
+        {
+            FileInputStream fis = new FileInputStream("C://Users//racar//IdeaProjects//Trial_Problem//src//database.txt");
+            ObjectInputStream in = new ObjectInputStream(fis);//read stored data from file
+            setShapes((ArrayList<Shape>) in.readObject());
+            in.close();
+        }catch(Exception e){
+            System.out.println("error");
+        }
     }
 
 }
