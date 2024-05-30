@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public abstract class Shape implements Serializable
+public abstract class Shape
 {
     public String name;//common feature
 

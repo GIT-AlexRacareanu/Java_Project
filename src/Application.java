@@ -6,6 +6,11 @@ public final class Application {
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
     public static void runApp() throws InterruptedException, IOException, ClassNotFoundException {
+        Canvas.getInstance().loadShapes();
+        runMenu();
+    }
+
+    public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
         System.out.println("----------------------------------------MENU----------------------------------------");
         System.out.println("1.Create a shape");
         System.out.println("2.Show canvas content");
@@ -44,31 +49,31 @@ public final class Application {
                     break;
                 }
                 else{
-                System.out.println("What would you like to print?");
-                System.out.println("1.All Shapes");
-                System.out.println("2.Cornered Shapes");
-                System.out.print("Write your choice: ");
+                    System.out.println("What would you like to print?");
+                    System.out.println("1.All Shapes");
+                    System.out.println("2.Cornered Shapes");
+                    System.out.print("Write your choice: ");
                     switch (input.nextInt())
                     {
-                         case 1:
-                             System.out.println("There is the content you added:");
-                             Canvas.getInstance().printContent();//all the shapes,including circles
-                             redirect();
-                             break;
-                         case 2:
-                             if(Canvas.getInstance().getCornerShapes().isEmpty()) {
-                                 System.out.println("The list is empty! Try adding some cornered shapes.");
-                             }
-                             else {
+                        case 1:
+                            System.out.println("There is the content you added:");
+                            Canvas.getInstance().printContent();//all the shapes,including circles
+                            redirect();
+                            break;
+                        case 2:
+                            if(Canvas.getInstance().getCornerShapes().isEmpty()) {
+                                System.out.println("The list is empty! Try adding some cornered shapes.");
+                            }
+                            else {
                                 System.out.println("There is the content you added:");
                                 Canvas.getInstance().printCornerShapes();//only the cornered ones
-                             }
-                             redirect();
-                             break;
-                         default:
-                             System.out.println("Wrong input!!!");
-                             redirect();
-                     }
+                            }
+                            redirect();
+                            break;
+                        default:
+                            System.out.println("Wrong input!!!");
+                            redirect();
+                    }
                 }
                 break;
             case 3:
@@ -140,7 +145,7 @@ public final class Application {
             case 1://back to start
                 System.out.print("You will be redirected soon");
                 loading();
-                runApp();
+                runMenu();
                 break;
             case 2://end app
                 closeApp();

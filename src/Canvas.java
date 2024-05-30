@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Canvas {
+public class Canvas implements Serializable {
 
     private ArrayList<Shape> shapes; //private feature
 
@@ -17,7 +17,7 @@ public class Canvas {
 
     public static Canvas getInstance() {
         if(uniqueCanvas==null)
-            uniqueCanvas = new Canvas();
+            uniqueCanvas=new Canvas();
         return uniqueCanvas;
     }
 
@@ -83,24 +83,24 @@ public class Canvas {
     public void saveShapes() {
          try
          {
-             FileOutputStream fos = new FileOutputStream("C://Users//racar//IdeaProjects//Trial_Problem//src//database.txt");
+             FileOutputStream fos = new FileOutputStream("src//database.txt");
              ObjectOutputStream out = new ObjectOutputStream(fos);//store data into file
-             out.writeObject(shapes);
+             out.writeObject(uniqueCanvas);
              out.close();
          }catch(Exception e){
-             System.out.println("error");
+             System.out.println("ERROR while saving to file!");
          }
     }
 
     public void loadShapes(){
         try
         {
-            FileInputStream fis = new FileInputStream("C://Users//racar//IdeaProjects//Trial_Problem//src//database.txt");
+            FileInputStream fis = new FileInputStream("src//database.txt");
             ObjectInputStream in = new ObjectInputStream(fis);//read stored data from file
-            setShapes((ArrayList<Shape>) in.readObject());
+            uniqueCanvas = (Canvas)in.readObject();
             in.close();
         }catch(Exception e){
-            System.out.println("error");
+            System.out.println("Canvas is NULL");
         }
     }
 
