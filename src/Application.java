@@ -8,6 +8,7 @@ public final class Application {
     public static void runApp() throws InterruptedException, IOException, ClassNotFoundException {
         Canvas.getInstance().loadShapes();
         runMenu();
+        Canvas.getInstance().saveShapes();
     }
 
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
@@ -159,7 +160,6 @@ public final class Application {
     }
 
     public static void closeApp() throws InterruptedException {
-        Canvas.getInstance().saveShapes();
         System.out.print("The program will close soon");
         loading();
     }

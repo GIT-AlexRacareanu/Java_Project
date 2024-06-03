@@ -8,7 +8,7 @@ public class Canvas implements Serializable {
 
     private List<Polygon> cornerShapes;//private feature
 
-    private static Canvas uniqueCanvas = null;//the one and only canvas instance
+    private static Canvas uniqueCanvas;//the one and only canvas instance
 
     private Canvas() { //public constructor for instantiating only once
             shapes = new ArrayList<>();
@@ -83,8 +83,7 @@ public class Canvas implements Serializable {
     public void saveShapes() {
          try
          {
-             FileOutputStream fos = new FileOutputStream("src//database.txt");
-             ObjectOutputStream out = new ObjectOutputStream(fos);//store data into file
+             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src//database.txt"));//store data into file
              out.writeObject(uniqueCanvas);
              out.close();
          }catch(Exception e){
@@ -95,8 +94,7 @@ public class Canvas implements Serializable {
     public void loadShapes(){
         try
         {
-            FileInputStream fis = new FileInputStream("src//database.txt");
-            ObjectInputStream in = new ObjectInputStream(fis);//read stored data from file
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("src//database.txt"));//read stored data from file
             uniqueCanvas = (Canvas)in.readObject();
             in.close();
         }catch(Exception e){
