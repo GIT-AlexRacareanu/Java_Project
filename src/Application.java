@@ -14,18 +14,18 @@ public final class Application {
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
         System.out.println("----------------------------------------MENU----------------------------------------");
         System.out.println("1.Create a shape");
-        System.out.println("2.Show canvas content");
-        System.out.println("3.Close the app");
+        System.out.println("2.Delete a shape");
+        System.out.println("3.Show canvas content");
+        System.out.println("4.Close the app");
         System.out.print("Write your choice: ");
-        switch(input.nextInt())
-        {
+        switch(input.nextInt()) {
             case 1://shape creation menu
                 System.out.println("----------------------------------SHAPE_CREATION_MENU-------------------------------");
                 System.out.println("1.Square");
                 System.out.println("2.Rectangle");
                 System.out.println("3.Circle");
                 System.out.print("Write your choice: ");
-                switch (input.nextInt()){
+                switch (input.nextInt()) {
                     case 1://square
                         createSquare();
                         break;
@@ -42,12 +42,23 @@ public final class Application {
                         break;
                 }
                 break;
-            case 2:
+            case 2://shape deletion menu
+                System.out.println("----------------------------------SHAPE_DELETION_MENU-------------------------------");
+                if (Canvas.getInstance().getShapes().isEmpty()) {
+                    System.out.println("The list is empty! Try adding some shapes.");
+                } else{
+                    System.out.println("Your list is: ");
+                    Canvas.getInstance().printContent(true);
+                    System.out.println("Write the name of the one you want to delete: ");
+                    Canvas.getInstance().deleteShape(input.next());
+                }
+                redirect();
+                break;
+            case 3:
                 System.out.println("-----------------------------------LISTING_MENU--------------------------------------");
                 if(Canvas.getInstance().getShapes().isEmpty()) {
                     System.out.println("The list is empty! Try adding some shapes.");
                     redirect();
-                    break;
                 }
                 else{
                     System.out.println("What would you like to print?");
@@ -58,7 +69,7 @@ public final class Application {
                     {
                         case 1:
                             System.out.println("There is the content you added:");
-                            Canvas.getInstance().printContent();//all the shapes,including circles
+                            Canvas.getInstance().printContent(false);//all the shapes,including circles
                             redirect();
                             break;
                         case 2:
@@ -74,10 +85,11 @@ public final class Application {
                         default:
                             System.out.println("Wrong input!!!");
                             redirect();
+                            break;
                     }
                 }
                 break;
-            case 3:
+            case 4:
                 closeApp();
                 break;
             default:
