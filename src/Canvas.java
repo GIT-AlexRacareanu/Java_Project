@@ -1,14 +1,15 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Canvas implements Serializable {
 
-    private ArrayList<Shape> shapes; //private feature
+    private ArrayList<Shape> shapes;
 
-    private List<Polygon> cornerShapes;//private feature
+    private List<Polygon> cornerShapes;
 
-    private static Canvas uniqueCanvas;//the one and only canvas instance
+    private static Canvas uniqueCanvas;
 
     private Canvas() { //public constructor for instantiating only once
             shapes = new ArrayList<>();
@@ -21,7 +22,6 @@ public class Canvas implements Serializable {
         return uniqueCanvas;
     }
 
-    ////////methods continue to be public, so we can use them outside the class
 
     public ArrayList<Shape> getShapes() {
         return shapes;
@@ -120,6 +120,48 @@ public class Canvas implements Serializable {
             System.out.println("Class cast error: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
+        }
+    }
+
+    public void importShapes(String path) {
+
+        try {
+            int objectIndex = 1;
+            File csvFile = new File(path);
+            Scanner csvScanner = new Scanner(csvFile);
+            while (csvScanner.hasNextLine()) {
+                String inputLine = csvScanner.nextLine();
+                String[] lineContent = inputLine.split(",");
+                switch (lineContent[0]) {
+                    case "Square":
+                        try {
+                            uniqueCanvas.addShape(new Square(lineContent[1], Double.parseDouble(lineContent[2])));
+                        } catch (Exception e) {
+                            System.out.println("Error Square at line " + objectIndex);
+                        }
+                        break;
+                    case "Rectangle":
+                        try {
+                            uniqueCanvas.addShape(new Rectangle(lineContent[1], Double.parseDouble(lineContent[2]), Double.parseDouble(lineContent[3])));
+                        } catch (Exception e) {
+                            System.out.println("Error Rectangle at line " + objectIndex);
+                        }
+                        break;
+                    case "Circle":
+                        try {
+                            uniqueCanvas.addShape(new Circle(lineContent[1], Double.parseDouble(lineContent[2])));
+                        } catch (Exception e) {
+                            System.out.println("Error Circle at line " + objectIndex);
+                        }
+                        break;
+                    default:
+                        System.out.println("Unrecognized object at line " + objectIndex);
+                        break;
+                }
+                objectIndex++;
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("the specified file does not exist!");
         }
     }
 
