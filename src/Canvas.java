@@ -155,7 +155,7 @@ public class Canvas implements Serializable {
                         }
                         break;
                     default:
-                        System.out.println("Unrecognized object type(" +  lineContent[0] + ") at line " + objectIndex);
+                        System.out.println("Unrecognized object at line " + objectIndex);
                         break;
                 }
                 objectIndex++;
