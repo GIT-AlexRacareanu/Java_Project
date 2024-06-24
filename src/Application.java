@@ -24,6 +24,7 @@ public final class Application {
                 System.out.println("1.Square");
                 System.out.println("2.Rectangle");
                 System.out.println("3.Circle");
+                System.out.println("4.Import shapes from file");
                 System.out.print("Write your choice: ");
                 switch (input.nextInt()) {
                     case 1://square
@@ -34,6 +35,9 @@ public final class Application {
                         break;
                     case 3://circle
                         createCircle();
+                        break;
+                    case 4:
+                        importFromFile();
                         break;
                     default://error
                         System.out.println("//////////////////////////////////////////////////////////////////////////////");
@@ -137,6 +141,13 @@ public final class Application {
         double radius = input.nextDouble();
         Canvas.getInstance().addShape(new Circle(name,radius));
         System.out.println("Shape added");
+        redirect();
+    }
+
+    public static void importFromFile() throws IOException, InterruptedException, ClassNotFoundException {
+        System.out.println("paste your path here(ex:Parent//Child//file.csv):");
+        String path = input.next();
+        Canvas.getInstance().importShapes(path);
         redirect();
     }
 
