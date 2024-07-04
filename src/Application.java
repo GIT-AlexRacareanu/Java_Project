@@ -6,9 +6,9 @@ public final class Application {
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
     public static void runApp() throws InterruptedException, IOException, ClassNotFoundException {
-        Canvas.getInstance().loadShapes();
+        Canvas.loadShapes();
         runMenu();
-        Canvas.getInstance().saveShapes();
+        Canvas.saveShapes();
     }
 
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
@@ -52,7 +52,7 @@ public final class Application {
                     System.out.println("The list is empty! Try adding some shapes.");
                 } else{
                     System.out.println("Your list is: ");
-                    Canvas.getInstance().printContent(true);
+                    Canvas.getInstance().printContentByName();
                     System.out.println("Write the name of the one you want to delete: ");
                     Canvas.getInstance().deleteShape(input.next());
                 }
@@ -73,7 +73,7 @@ public final class Application {
                     {
                         case 1:
                             System.out.println("There is the content you added:");
-                            Canvas.getInstance().printContent(false);//all the shapes,including circles
+                            Canvas.getInstance().printContent();//all the shapes,including circles
                             redirect();
                             break;
                         case 2:
@@ -147,7 +147,7 @@ public final class Application {
     public static void importFromFile() throws IOException, InterruptedException, ClassNotFoundException {
         System.out.println("paste your path here(ex:Parent//Child//file.csv):");
         String path = input.next();
-        Canvas.getInstance().importShapes(path);
+        ShapesManagement.importShapes(path);
         redirect();
     }
 
