@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Application {
@@ -147,7 +148,21 @@ public final class Application {
     public static void importFromFile() throws IOException, InterruptedException, ClassNotFoundException {
         System.out.println("paste your path here(ex:Parent//Child//file.csv):");
         String path = input.next();
-        ShapesManagement.importShapes(path);
+        ArrayList<Shape> tempList = ShapesCsvParser.importShapes(path);
+        if(tempList.isEmpty()){
+            System.out.println("The list is empty!");
+        }
+        else {
+            System.out.println("This is the list written in the specified path:");
+            System.out.println(tempList);
+            System.out.println("Would you like to add the objects to canvas?");
+            System.out.println("1.Yes");
+            System.out.println("2.No");
+            if(input.nextInt()==1){
+                tempList.addAll(Canvas.getInstance().getShapes());
+                Canvas.getInstance().setShapes(tempList);
+            }
+        }
         redirect();
     }
 
