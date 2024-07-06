@@ -5,9 +5,8 @@ import java.util.Scanner;
 
 public final class ShapesCsvParser {
 
-    private static ArrayList<Shape> shapes = new ArrayList<>();
-
-    public static ArrayList<Shape> importShapes(String path) {
+    public ArrayList<Shape> importShapes(String path) {
+        ArrayList<Shape> shapeList = new ArrayList<>();
         int objectIndex = 1;
         File csvFile = new File(path);
         try {
@@ -15,50 +14,38 @@ public final class ShapesCsvParser {
             String inputLine;
             while (csvScanner.hasNextLine()) {
                 inputLine = csvScanner.nextLine();
-                importShape(inputLine, objectIndex);
+                importShape(inputLine, shapeList ,objectIndex);
                 objectIndex++;
             }
         }catch (FileNotFoundException e){
             System.out.println("Unrecognized file!");
         }
-        return shapes;
+        return shapeList;
     }
 
-    private static void importSquare(String[] line){
-        try{
-            shapes.add(new Square(line[1],Double.parseDouble(line[2])));
-        }catch(Exception e){
-            System.out.println("Error");
-        }
+    private Square importSquare(String[] line) {
+    return new Square(line[1],Double.parseDouble(line[2]));
     }
 
-    private static void importRectangle(String[] line){
-        try{
-            shapes.add(new Rectangle(line[1],Double.parseDouble(line[2]),Double.parseDouble(line[3])));
-        }catch(Exception e){
-            System.out.println("Error");
-        }
+    private Rectangle importRectangle(String[] line){
+            return new Rectangle(line[1],Double.parseDouble(line[2]),Double.parseDouble(line[3]));
     }
 
-    private static void importCircle(String[] line){
-        try{
-            shapes.add(new Circle(line[1],Double.parseDouble(line[2])));
-        }catch(Exception e){
-            System.out.println("Error");
-        }
+    private Circle importCircle(String[] line) {
+        return new Circle(line[1],Double.parseDouble(line[2]));
     }
 
-    private static void importShape(@NotNull String inputLine, int index) {
+    private void importShape(@NotNull String inputLine,ArrayList<Shape> list ,int index) {
         String[] lineContent = inputLine.split(",");
         switch (lineContent[0]) {
             case "Square":
-                importSquare(lineContent);
+                list.add(importSquare(lineContent));
                 break;
             case "Rectangle":
-                importRectangle(lineContent);
+                list.add(importRectangle(lineContent));
                 break;
             case "Circle":
-                importCircle(lineContent);
+                list.add(importCircle(lineContent));
                 break;
             default:
                 System.out.println("Unrecognized object at line "+index);

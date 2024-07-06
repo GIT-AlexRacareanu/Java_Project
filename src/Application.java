@@ -148,19 +148,20 @@ public final class Application {
     public static void importFromFile() throws IOException, InterruptedException, ClassNotFoundException {
         System.out.println("paste your path here(ex:Parent//Child//file.csv):");
         String path = input.next();
-        ArrayList<Shape> tempList = ShapesCsvParser.importShapes(path);
+        ArrayList<Shape> tempList = new ShapesCsvParser().importShapes(path);
         if(tempList.isEmpty()){
             System.out.println("The list is empty!");
         }
         else {
             System.out.println("This is the list written in the specified path:");
-            System.out.println(tempList);
+            for(Shape shape: tempList)
+                System.out.println(shape);
             System.out.println("Would you like to add the objects to canvas?");
             System.out.println("1.Yes");
             System.out.println("2.No");
             if(input.nextInt()==1){
-                tempList.addAll(Canvas.getInstance().getShapes());
-                Canvas.getInstance().setShapes(tempList);
+                Canvas.getInstance().getShapes().addAll(tempList);
+                System.out.println("Successfully added to canvas");
             }
         }
         redirect();
