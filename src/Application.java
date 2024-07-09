@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Application {
@@ -6,9 +7,9 @@ public final class Application {
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
     public static void runApp() throws InterruptedException, IOException, ClassNotFoundException {
-        Canvas.getInstance().loadShapes();
+        Canvas.loadShapes();
         runMenu();
-        Canvas.getInstance().saveShapes();
+        Canvas.saveShapes();
     }
 
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
@@ -24,6 +25,7 @@ public final class Application {
                 System.out.println("1.Square");
                 System.out.println("2.Rectangle");
                 System.out.println("3.Circle");
+                System.out.println("4.Import shapes from file");
                 System.out.print("Write your choice: ");
                 switch (input.nextInt()) {
                     case 1://square
@@ -34,6 +36,9 @@ public final class Application {
                         break;
                     case 3://circle
                         createCircle();
+                        break;
+                    case 4:
+                        importFromFile();
                         break;
                     default://error
                         System.out.println("//////////////////////////////////////////////////////////////////////////////");
@@ -48,7 +53,7 @@ public final class Application {
                     System.out.println("The list is empty! Try adding some shapes.");
                 } else{
                     System.out.println("Your list is: ");
-                    Canvas.getInstance().printContent(true);
+                    Canvas.getInstance().printContentByName();
                     System.out.println("Write the name of the one you want to delete: ");
                     Canvas.getInstance().deleteShape(input.next());
                 }
@@ -69,7 +74,7 @@ public final class Application {
                     {
                         case 1:
                             System.out.println("There is the content you added:");
-                            Canvas.getInstance().printContent(false);//all the shapes,including circles
+                            Canvas.getInstance().printContent();//all the shapes,including circles
                             redirect();
                             break;
                         case 2:
@@ -137,6 +142,28 @@ public final class Application {
         double radius = input.nextDouble();
         Canvas.getInstance().addShape(new Circle(name,radius));
         System.out.println("Shape added");
+        redirect();
+    }
+
+    public static void importFromFile() throws IOException, InterruptedException, ClassNotFoundException {
+        System.out.println("paste your path here(ex:Parent//Child//file.csv):");
+        String path = input.next();
+        ArrayList<Shape> tempList = new ShapesCsvParser().importShapes(path);
+        if(tempList.isEmpty()){
+            System.out.println("The list is empty!");
+        }
+        else {
+            System.out.println("This is the list written in the specified path:");
+            for(Shape shape: tempList)
+                System.out.println(shape);
+            System.out.println("Would you like to add the objects to canvas?");
+            System.out.println("1.Yes");
+            System.out.println("2.No");
+            if(input.nextInt()==1){
+                Canvas.getInstance().getShapes().addAll(tempList);
+                System.out.println("Successfully added to canvas");
+            }
+        }
         redirect();
     }
 
