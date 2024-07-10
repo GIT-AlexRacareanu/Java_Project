@@ -35,6 +35,10 @@ public final class ShapesCsvParser {
         return new Circle(line[1],Double.parseDouble(line[2]));
     }
 
+    private Star importStar(String[] line) {
+        return new Star(line[1],Double.parseDouble(line[2]));
+    }
+
     private void importShape(@NotNull String inputLine,ArrayList<Shape> list ,int index) {
         String[] lineContent = inputLine.split(",");
         switch (lineContent[0]) {
@@ -46,6 +50,9 @@ public final class ShapesCsvParser {
                 break;
             case "Circle":
                 list.add(importCircle(lineContent));
+                break;
+            case "Star":
+                list.add(importStar(lineContent));
                 break;
             default:
                 System.out.println("Unrecognized object at line "+index);
