@@ -15,4 +15,9 @@ public abstract class Shape implements Serializable
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean isCornered()
+    {
+        return getNumberOfSides()>0;
+    }
 }

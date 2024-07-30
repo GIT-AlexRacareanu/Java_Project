@@ -25,7 +25,8 @@ public final class Application {
                 System.out.println("1.Square");
                 System.out.println("2.Rectangle");
                 System.out.println("3.Circle");
-                System.out.println("4.Import shapes from file");
+                System.out.println("4.Star");
+                System.out.println("5.Import shapes from file");
                 System.out.print("Write your choice: ");
                 switch (input.nextInt()) {
                     case 1://square
@@ -38,6 +39,9 @@ public final class Application {
                         createCircle();
                         break;
                     case 4:
+                        createStar();
+                        break;
+                    case 5:
                         importFromFile();
                         break;
                     default://error
@@ -145,6 +149,19 @@ public final class Application {
         redirect();
     }
 
+    public static void createStar() throws IOException, InterruptedException, ClassNotFoundException {
+        System.out.println("--------------------------------STAR_CREATION_MENU------------------------------");
+        System.out.println("A star needs a name and the length of a side");
+        System.out.println("introduce the name:");
+        String name = input.next();
+        System.out.println("introduce the side length(centimeters):");
+        double sideLength = input.nextDouble();
+        Canvas.getInstance().addShape(new Star(name,sideLength));
+        Canvas.getInstance().addCornerShape(new Star(name,sideLength));
+        System.out.println("Shape added");
+        redirect();
+    }
+
     public static void importFromFile() throws IOException, InterruptedException, ClassNotFoundException {
         System.out.println("paste your path here(ex:Parent//Child//file.csv):");
         String path = input.next();
@@ -160,7 +177,11 @@ public final class Application {
             System.out.println("1.Yes");
             System.out.println("2.No");
             if(input.nextInt()==1){
-                Canvas.getInstance().getShapes().addAll(tempList);
+                for(Shape shape: tempList){
+                    Canvas.getInstance().getShapes().add(shape);
+                    if(shape.isCornered())
+                        Canvas.getInstance().getCornerShapes().add((Polygon)shape);
+                }
                 System.out.println("Successfully added to canvas");
             }
         }
