@@ -1,15 +1,20 @@
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Application {
 
+    private static final DatabaseConnector myDatabase = new DatabaseConnector();
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
-    public static void runApp() throws InterruptedException, IOException, ClassNotFoundException {
+    public static void runApp() throws InterruptedException, IOException, ClassNotFoundException, SQLException {
+        myDatabase.connect();
+        DatabaseInitializer.initialize(myDatabase);
         Canvas.loadShapes();
         runMenu();
         Canvas.saveShapes();
+        myDatabase.disconnect();
     }
 
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
@@ -17,7 +22,8 @@ public final class Application {
         System.out.println("1.Create a shape");
         System.out.println("2.Delete a shape");
         System.out.println("3.Show canvas content");
-        System.out.println("4.Close the app");
+        System.out.println("4.Work with MySql database");
+        System.out.println("5.Close the app");
         System.out.print("Write your choice: ");
         switch(input.nextInt()) {
             case 1://shape creation menu
@@ -99,6 +105,13 @@ public final class Application {
                 }
                 break;
             case 4:
+                System.out.println("-----------------------------------DATABASE_MENU--------------------------------------");
+                System.out.print("There you should write your query:");
+                myDatabase.executeQuery(input.next());
+                myDatabase.printResult();
+                redirect();
+                break;
+            case 5:
                 closeApp();
                 break;
             default:
