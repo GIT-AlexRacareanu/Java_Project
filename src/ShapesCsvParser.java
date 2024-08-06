@@ -1,4 +1,3 @@
-import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -39,7 +38,7 @@ public final class ShapesCsvParser {
         return new Star(line[1],Double.parseDouble(line[2]));
     }
 
-    private void importShape(@NotNull String inputLine,ArrayList<Shape> list ,int index) {
+    private void importShape(String inputLine,ArrayList<Shape> list ,int index) {
         String[] lineContent = inputLine.split(",");
         switch (lineContent[0]) {
             case "Square":

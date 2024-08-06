@@ -106,9 +106,8 @@ public final class Application {
                 break;
             case 4:
                 System.out.println("-----------------------------------DATABASE_MENU--------------------------------------");
-                System.out.print("There you should write your query:");
+                System.out.print("Write a query:");
                 myDatabase.executeQuery(input.next());
-                myDatabase.printResult();
                 redirect();
                 break;
             case 5:

@@ -6,17 +6,9 @@ public class DatabaseConnector {
     private Statement statement;
     private ResultSet resultSet;
 
-    public ResultSet getResultSet() {
-        return resultSet;
-    }
-
-    public Statement getStatement() {
-        return statement;
-    }
-
     public void connect(){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/storage_schema");
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/storage_schema","root","password");
             statement = connection.createStatement();
         }
         catch (Exception e){
@@ -26,9 +18,16 @@ public class DatabaseConnector {
 
     public void executeQuery(String sqlString) {
             try {
-                resultSet = statement.executeQuery(sqlString);
+                String[] query = sqlString.split(" ");
+                if(query[0].equalsIgnoreCase("SELECT*")) {
+                    resultSet = statement.executeQuery(sqlString);
+                    printResult();
+                }
+                else {
+                    statement.executeUpdate(sqlString);
+                }
             }catch (Exception e){
-                System.out.println("couldn't execute the specified query!");
+               System.out.println("couldn't execute the specified query!");
             }
     }
 

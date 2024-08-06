@@ -1,4 +1,3 @@
-import java.sql.SQLException;
 
 public final class DatabaseInitializer {
 
@@ -9,10 +8,10 @@ public final class DatabaseInitializer {
 
     public static void initialize(DatabaseConnector myDatabase) {
         try{
-                myDatabase.getStatement().executeUpdate(createSquare);
-                myDatabase.getStatement().executeUpdate(createRectangle);
-                myDatabase.getStatement().executeUpdate(createCircle);
-                myDatabase.getStatement().executeUpdate(createStar);
+                myDatabase.executeQuery(createSquare);
+                myDatabase.executeQuery(createRectangle);
+                myDatabase.executeQuery(createCircle);
+                myDatabase.executeQuery(createStar);
         }catch (Exception e) {
             System.out.println("Couldn't initialize the database");
         }
