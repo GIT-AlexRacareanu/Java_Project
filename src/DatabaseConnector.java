@@ -3,13 +3,10 @@ import java.sql.*;
 public class DatabaseConnector {
 
     private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
 
     public void connect(){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/storage_schema","root","password");
-            statement = connection.createStatement();
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/storage_schema");
         }
         catch (Exception e){
             System.out.println("error while communicating with database!");
@@ -18,10 +15,11 @@ public class DatabaseConnector {
 
     public void executeQuery(String sqlString) {
             try {
+                Statement statement = connection.createStatement();
                 String[] query = sqlString.split(" ");
                 if(query[0].equalsIgnoreCase("SELECT*")) {
-                    resultSet = statement.executeQuery(sqlString);
-                    printResult();
+                    ResultSet resultSet = statement.executeQuery(sqlString);
+                    printResult(resultSet);
                 }
                 else {
                     statement.executeUpdate(sqlString);
@@ -31,7 +29,7 @@ public class DatabaseConnector {
             }
     }
 
-    public void printResult(){
+    public void printResult(ResultSet resultSet){
         try {
             System.out.print("Table: " + resultSet.getMetaData().getTableName(1));
              while(resultSet.next()){
@@ -48,10 +46,6 @@ public class DatabaseConnector {
     public void disconnect() throws SQLException {
            if(connection!=null)
             connection.close();
-           if(statement!=null)
-            statement.close();
-           if(resultSet!=null)
-            resultSet.close();
     }
 
 }
