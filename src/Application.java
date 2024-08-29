@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -106,9 +107,7 @@ public final class Application {
                 break;
             case 4:
                 System.out.println("-----------------------------------DATABASE_MENU--------------------------------------");
-                System.out.print("Write a query:");
-                myDatabase.executeQuery(input.next());
-                redirect();
+                databaseMenu();
                 break;
             case 5:
                 closeApp();
@@ -119,6 +118,25 @@ public final class Application {
                 break;
         }
 
+    }
+
+    public static void databaseMenu() throws IOException, InterruptedException, ClassNotFoundException {
+        ResultSet result = null;
+          System.out.println("Would you like to write a query?");
+          System.out.println("1.Yes");
+          System.out.println("2.No");
+          System.out.print("Write your choice: ");
+        if(input.nextInt()==1) {
+            System.out.print("write a query:");
+            result = myDatabase.executeQuery(input.next());
+        }
+          System.out.println("Would you like to print the result?");
+          System.out.println("1.Yes");
+          System.out.println("2.No");
+          System.out.print("Write your choice: ");
+        if(input.nextInt()==1)
+            myDatabase.printResult(result);
+        redirect();
     }
 
     public static void createSquare() throws InterruptedException, IOException, ClassNotFoundException {

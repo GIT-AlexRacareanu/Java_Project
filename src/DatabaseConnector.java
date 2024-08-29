@@ -13,20 +13,21 @@ public class DatabaseConnector {
         }
     }
 
-    public void executeQuery(String sqlString) {
-            try {
+    public ResultSet executeQuery(String sqlString) {
+        ResultSet resultSet = null;
+        try {
                 Statement statement = connection.createStatement();
                 String[] query = sqlString.split(" ");
                 if(query[0].equalsIgnoreCase("SELECT*")) {
-                    ResultSet resultSet = statement.executeQuery(sqlString);
-                    printResult(resultSet);
+                    resultSet = statement.executeQuery(sqlString);
                 }
                 else {
                     statement.executeUpdate(sqlString);
                 }
-            }catch (Exception e){
+        }catch (Exception e){
                System.out.println("couldn't execute the specified query!");
-            }
+        }
+            return resultSet;
     }
 
     public void printResult(ResultSet resultSet){
@@ -39,7 +40,7 @@ public class DatabaseConnector {
              }
             System.out.println();
         }catch (Exception e){
-            System.out.println("error while reading the results!");
+            System.out.println("the query did not return any results!");
         }
     }
 
