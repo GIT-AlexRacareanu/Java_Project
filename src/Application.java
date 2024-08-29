@@ -1,15 +1,21 @@
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Application {
 
+    private static final DatabaseConnector myDatabase = new DatabaseConnector();
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
-    public static void runApp() throws InterruptedException, IOException, ClassNotFoundException {
+    public static void runApp() throws InterruptedException, IOException, ClassNotFoundException, SQLException {
+        myDatabase.connect();
+        DatabaseInitializer.initialize(myDatabase);
         Canvas.loadShapes();
         runMenu();
         Canvas.saveShapes();
+        myDatabase.disconnect();
     }
 
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
@@ -17,7 +23,8 @@ public final class Application {
         System.out.println("1.Create a shape");
         System.out.println("2.Delete a shape");
         System.out.println("3.Show canvas content");
-        System.out.println("4.Close the app");
+        System.out.println("4.Work with MySql database");
+        System.out.println("5.Close the app");
         System.out.print("Write your choice: ");
         switch(input.nextInt()) {
             case 1://shape creation menu
@@ -99,6 +106,10 @@ public final class Application {
                 }
                 break;
             case 4:
+                System.out.println("-----------------------------------DATABASE_MENU--------------------------------------");
+                databaseMenu();
+                break;
+            case 5:
                 closeApp();
                 break;
             default:
@@ -107,6 +118,25 @@ public final class Application {
                 break;
         }
 
+    }
+
+    public static void databaseMenu() throws IOException, InterruptedException, ClassNotFoundException {
+        ResultSet result = null;
+          System.out.println("Would you like to write a query?");
+          System.out.println("1.Yes");
+          System.out.println("2.No");
+          System.out.print("Write your choice: ");
+        if(input.nextInt()==1) {
+            System.out.print("write a query:");
+            result = myDatabase.executeQuery(input.next());
+        }
+          System.out.println("Would you like to print the result?");
+          System.out.println("1.Yes");
+          System.out.println("2.No");
+          System.out.print("Write your choice: ");
+        if(input.nextInt()==1)
+            myDatabase.printResult(result);
+        redirect();
     }
 
     public static void createSquare() throws InterruptedException, IOException, ClassNotFoundException {
