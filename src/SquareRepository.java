@@ -9,11 +9,7 @@ public class SquareRepository implements ShapeRepository {
     }
 
     public void insert(Shape shape) {
-       myDatabase.executeQuery("insert into square VALUES(id," + shape.getName() + ", " + ((Square) shape).getLength() + ");");
-    }
-
-    public void update(Shape shape) {
-
+       myDatabase.executeQuery("insert into square VALUES(NULL, '" + shape.getName() + "', " + ((Square) shape).getLength() + ");");
     }
 
     public void delete(long id) {

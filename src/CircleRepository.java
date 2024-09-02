@@ -8,11 +8,7 @@ public class CircleRepository {
     }
 
     public void insert(Shape shape) {
-        myDatabase.executeQuery("insert into square VALUES(id," + shape.getName() + ", " + ((Circle) shape).getRadius() + ");");
-    }
-
-    public void update(Shape shape) {
-
+        myDatabase.executeQuery("insert into circle VALUES(NULL, '" + shape.getName() + "', " + ((Circle) shape).getRadius() + ");");
     }
 
     public void delete(long id) {

@@ -9,11 +9,7 @@ public class StarRepository {
     }
 
     public void insert(Shape shape) {
-        myDatabase.executeQuery("insert into square VALUES(id," + shape.getName() + ", " + ((Star) shape).getSideLength() + ");");
-    }
-
-    public void update(Shape shape) {
-
+        myDatabase.executeQuery("insert into star VALUES(NULL, '" + shape.getName() + "', " + ((Star) shape).getSideLength() + ");");
     }
 
     public void delete(long id) {

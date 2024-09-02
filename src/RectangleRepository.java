@@ -9,11 +9,7 @@ public class RectangleRepository {
     }
 
     public void insert(Shape shape) {
-        myDatabase.executeQuery("insert into square VALUES(id," + shape.getName() + ", "+ ((Rectangle) shape).getLength() + ", "+ ((Rectangle) shape).getWidth() + ");");
-    }
-
-    public void update(Shape shape) {
-
+        myDatabase.executeQuery("insert into rectangle VALUES(NULL, '" + shape.getName() + "' , "+ ((Rectangle) shape).getLength() + ", "+ ((Rectangle) shape).getWidth() + ");");
     }
 
     public void delete(long id) {
