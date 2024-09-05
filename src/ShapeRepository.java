@@ -1,10 +1,10 @@
-import java.sql.ResultSet;
+import java.util.List;
 
-public interface ShapeRepository {
+public interface ShapeRepository<GenericShape extends Shape> {
 
-    void insert(Shape shape);
+    void insert(GenericShape shape);
 
     void delete(long id);
 
-    ResultSet getAll();
+    List<GenericShape> getAll();
 }
