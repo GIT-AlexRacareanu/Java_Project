@@ -6,16 +6,12 @@ import java.util.Scanner;
 
 public final class Application {
 
-    private static final DatabaseConnector myDatabase = new DatabaseConnector();
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
     public static void runApp() throws InterruptedException, IOException, ClassNotFoundException, SQLException {
-        myDatabase.connect();
-        DatabaseInitializer.initialize(myDatabase);
         Canvas.loadShapes();
         runMenu();
         Canvas.saveShapes();
-        myDatabase.disconnect();
     }
 
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
@@ -128,14 +124,14 @@ public final class Application {
           System.out.print("Write your choice: ");
         if(input.nextInt()==1) {
             System.out.print("write a query:");
-            result = myDatabase.executeQuery(input.next());
+            result = Canvas.myDatabase.executeQuery(input.next());
         }
           System.out.println("Would you like to print the result?");
           System.out.println("1.Yes");
           System.out.println("2.No");
           System.out.print("Write your choice: ");
         if(input.nextInt()==1)
-            myDatabase.printResult(result);
+            Canvas.myDatabase.printResult(result);
         redirect();
     }
 
@@ -147,7 +143,6 @@ public final class Application {
         System.out.println("introduce the length(centimeters):");
         double length = input.nextDouble();
         Canvas.getInstance().addShape(new Square(name,length));
-        Canvas.getInstance().addCornerShape(new Square(name,length));
         System.out.println("Shape added!");
         redirect();
     }
@@ -162,7 +157,6 @@ public final class Application {
         System.out.println("introduce the width(centimeters):");
         double width = input.nextDouble();
         Canvas.getInstance().addShape(new Rectangle(name,length,width));
-        Canvas.getInstance().addCornerShape(new Rectangle(name,length,width));
         System.out.println("Shape added");
         redirect();
     }
@@ -187,7 +181,6 @@ public final class Application {
         System.out.println("introduce the side length(centimeters):");
         double sideLength = input.nextDouble();
         Canvas.getInstance().addShape(new Star(name,sideLength));
-        Canvas.getInstance().addCornerShape(new Star(name,sideLength));
         System.out.println("Shape added");
         redirect();
     }

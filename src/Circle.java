@@ -27,6 +27,6 @@ public class Circle extends Shape
 
     @Override
     public String toString(){
-        return "This is a " + this.name + " and it has a radius of " + this.radius + " centimeters";
+        return "This is a " + this.getClass().getName() + ", it's name is " + this.name + " and it has a radius of " + this.radius + " centimeters";
     }
 }

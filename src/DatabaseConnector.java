@@ -30,6 +30,14 @@ public class DatabaseConnector {
             return resultSet;
     }
 
+    //this clears the tables without deleting their structure
+    public void clear(){
+        executeQuery("Delete from square;");
+        executeQuery("Delete from rectangle;");
+        executeQuery("Delete from circle;");
+        executeQuery("Delete from star;");
+    }
+
     public void printResult(ResultSet resultSet){
         try {
             System.out.print("Table: " + resultSet.getMetaData().getTableName(1));

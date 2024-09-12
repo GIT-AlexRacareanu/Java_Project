@@ -35,6 +35,6 @@ public class Star extends Shape implements Polygon
 
     @Override
     public String toString() {
-        return "This is a "+ this.name +" and it has " +  numberOfSides + " sides of " +sideLength+ " centimeters";
+        return "This is a " + this.getClass().getName() + ", it's name is " + this.name +" and it has " +  numberOfSides + " sides of " +sideLength+ " centimeters";
     }
 }
