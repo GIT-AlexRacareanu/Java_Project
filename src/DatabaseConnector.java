@@ -25,7 +25,7 @@ public class DatabaseConnector {
                     statement.executeUpdate(sqlString);
                 }
         }catch (Exception e){
-               System.out.println("couldn't execute the specified query!");
+                System.out.println("couldn't execute the specified query!");
         }
             return resultSet;
     }

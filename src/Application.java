@@ -59,10 +59,12 @@ public final class Application {
                 if (Canvas.getInstance().getShapes().isEmpty()) {
                     System.out.println("The list is empty! Try adding some shapes.");
                 } else{
-                    System.out.println("Your list is: ");
-                    Canvas.getInstance().printContentByName();
-                    System.out.println("Write the name of the one you want to delete: ");
-                    Canvas.getInstance().deleteShape(input.next());
+                    System.out.println("This is your list:");
+                    Canvas.getInstance().printContent();
+                    System.out.println("What kind of shape would you like to delete?(square,rectangle,circle or star)");
+                    String classType = input.next();
+                    System.out.println("what is the id of the "+ classType + " you want to delete?");
+                    Canvas.getInstance().deleteShape(input.nextInt(), classType);
                 }
                 redirect();
                 break;
