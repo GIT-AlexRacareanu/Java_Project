@@ -62,9 +62,27 @@ public final class Application {
                     System.out.println("This is your list:");
                     Canvas.getInstance().printContent();
                     System.out.println("What kind of shape would you like to delete?(square,rectangle,circle or star)");
-                    String classType = input.next();
-                    System.out.println("what is the id of the "+ classType + " you want to delete?");
-                    Canvas.getInstance().deleteShape(input.nextInt(), classType);
+                    switch (input.next()){
+                        case "square":
+                            System.out.println("what is the id of the square you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"square");
+                            break;
+                        case "rectangle":
+                            System.out.println("what is the id of the rectangle you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"rectangle");
+                            break;
+                        case "circle":
+                            System.out.println("what is the id of the circle you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"circle");
+                            break;
+                        case "star":
+                            System.out.println("what is the id of the star you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"star");
+                            break;
+                        default:
+                            System.out.println("This kind of shape does not exist!");
+                            break;
+                    }
                 }
                 redirect();
                 break;

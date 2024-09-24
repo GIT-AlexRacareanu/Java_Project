@@ -85,17 +85,17 @@ public class Canvas {
 
     public void printContent()  {
         System.out.println("~~~~~SQUARES~~~~~");
-        for(int id=1; id <= squareList.getAll().size(); id++)
-            System.out.println(id+". "+squareList.getAll().get(id-1).getName()+ ", " +squareList.getAll().get(id-1).getLength());
+        for(Square square: squareList.getAll())
+            System.out.println(square.getId() + ". " + square.getName()+ ", " + square.getLength());
         System.out.println("~~~~RECTANGLES~~~");
-        for(int id=1; id <= rectangleList.getAll().size(); id++)
-            System.out.println(id+"."+rectangleList.getAll().get(id-1).getName()+ ", "+rectangleList.getAll().get(id-1).getLength()+", "+rectangleList.getAll().get(id-1).getWidth());
+        for(Rectangle rectangle: rectangleList.getAll())
+            System.out.println(rectangle.getId()+"." + rectangle.getName()+ ", " + rectangle.getLength()+", " + rectangle.getWidth());
         System.out.println("~~~~~CIRCLES~~~~~");
-        for(int id=1; id<= circleList.getAll().size(); id++)
-            System.out.println(id+"."+circleList.getAll().get(id-1).getName()+", "+circleList.getAll().get(id-1).getRadius());
+        for(Circle circle: circleList.getAll())
+            System.out.println(circle.getId() + "." + circle.getName() + ", " + circle.getRadius());
         System.out.println("~~~~~~STARS~~~~~~");
-        for(int id=1; id<= starList.getAll().size(); id++)
-            System.out.println(id+". "+starList.getAll().get(id-1).getName() + ", " + starList.getAll().get(id-1).getSideLength());
+        for(Star star: starList.getAll())
+            System.out.println(star.getId() + ". " + star.getName() + ", " + star.getSideLength());
     }
 
     public void addCornerShape(Polygon polygon) {

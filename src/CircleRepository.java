@@ -23,10 +23,10 @@ public class CircleRepository implements ShapeRepository<Circle> {
         try {
             while (result.next()) {
                 circleList.add(new Circle(result.getString("name"), result.getDouble("radius")));
+                circleList.getLast().setId(result.getInt("id"));
             }
         }catch (Exception e){
-            //System.out.println("Couldn't get the list of circles due to an error!");
-            e.printStackTrace();
+            System.out.println("Couldn't get the list of circles due to an error!");
         }
         return circleList;
     }

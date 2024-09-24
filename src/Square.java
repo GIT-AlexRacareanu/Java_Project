@@ -7,9 +7,8 @@ public class Square extends Shape implements  Polygon
     public Square(String name,double length)
     {
         this.length=length;
-        this.name=name;
+        this.setName(name);
     }
-
 
     public int getNumberOfSides() {
         return numberOfSides;
@@ -34,6 +33,6 @@ public class Square extends Shape implements  Polygon
 
     @Override
     public String toString(){
-        return "This is a " + this.getClass().getName() + ", it's name is " + this.name +" and it has " +  numberOfSides + " sides of " +length+ " centimeters";
+        return "This is a " + this.getClass().getName() + ", it's name is " + this.getName() +" and it has " +  numberOfSides + " sides of " +length+ " centimeters";
     }
 }
