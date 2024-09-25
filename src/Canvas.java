@@ -1,18 +1,20 @@
-import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Canvas implements Serializable {
+public class Canvas {
 
-    private ArrayList<Shape> shapes;
-
-    private List<Polygon> cornerShapes;
+    //connector
+    public static final DatabaseConnector myDatabase = new DatabaseConnector();
+    //repositories
+    private static final SquareRepository squareList = new SquareRepository();
+    private static final RectangleRepository rectangleList = new RectangleRepository();
+    private static final CircleRepository circleList = new CircleRepository();
+    private static final StarRepository starList = new StarRepository();
 
     private static Canvas uniqueCanvas;
 
     private Canvas() { //public constructor for instantiating only once
-            shapes = new ArrayList<>();
-            cornerShapes = new ArrayList<>();
     }
 
     public static Canvas getInstance() {
@@ -22,108 +24,113 @@ public class Canvas implements Serializable {
     }
 
     public List<Polygon> getCornerShapes() {
+        ArrayList<Polygon> cornerShapes = new ArrayList<>();
+        cornerShapes.addAll(squareList.getAll());
+        cornerShapes.addAll(rectangleList.getAll());
+        cornerShapes.addAll(starList.getAll());
         return cornerShapes;
     }
 
-    public void setCornerShapes(List<Polygon> cornerShapes) {
-        this.cornerShapes = cornerShapes;
-    }
-
     public ArrayList<Shape> getShapes() {
-        return shapes;
+        ArrayList<Shape> shapeList = new ArrayList<>();
+        shapeList.addAll(squareList.getAll());
+        shapeList.addAll(rectangleList.getAll());
+        shapeList.addAll(circleList.getAll());
+        shapeList.addAll(starList.getAll());
+        return shapeList;
     }
 
-    public void setShapes(ArrayList<Shape> shapes) {
-        this.shapes = shapes;
+    public void addShapes(ArrayList<Shape> shapeList) { //you can add more than one shape with this method
+        for (Shape shape : shapeList)
+            addShape(shape);
     }
 
-    public void addShape(Shape shape) {
-       shapes.add(shape);
+    public void addShape(Shape shape) { //you can only add one shape with this method
+       switch (shape.getClass().getName()) {
+           case "Square":
+               squareList.insert((Square) shape);
+               break;
+           case "Rectangle":
+               rectangleList.insert((Rectangle) shape);
+               break;
+           case "Circle":
+               circleList.insert((Circle) shape);
+               break;
+           case "Star":
+               starList.insert((Star) shape);
+               break;
+           default:
+               break;
+       }
     }
 
-    public void deleteShape(String name){
-        try {
-            shapes.removeIf(n -> (n.getName().equals(name)));
-        }catch (Exception e){
-            System.out.println("Element not found!");
-        }
+    public void deleteShape(long id, String classType){
+      switch (classType.toLowerCase()){
+          case "square":
+              squareList.delete(id);
+              break;
+          case "rectangle":
+              rectangleList.delete(id);
+              break;
+          case "circle":
+              circleList.delete(id);
+              break;
+          case "star":
+              starList.delete(id);
+              break;
+          default:
+              System.out.println("object not found!");
+      }
     }
 
     public void printContent()  {
-            for (Shape shape : shapes) {
-                System.out.println(shape.toString());
-            }
-    }
-
-    public void printContentByName(){
-        for(int  i = 1; i <= shapes.size(); i++){
-            System.out.println(i+"."+shapes.get(i-1).getName());
-        }
+        System.out.println("~~~~~SQUARES~~~~~");
+        for(Square square: squareList.getAll())
+            System.out.println(square.getId() + ". " + square.getName()+ ", " + square.getLength());
+        System.out.println("~~~~RECTANGLES~~~");
+        for(Rectangle rectangle: rectangleList.getAll())
+            System.out.println(rectangle.getId()+"." + rectangle.getName()+ ", " + rectangle.getLength()+", " + rectangle.getWidth());
+        System.out.println("~~~~~CIRCLES~~~~~");
+        for(Circle circle: circleList.getAll())
+            System.out.println(circle.getId() + "." + circle.getName() + ", " + circle.getRadius());
+        System.out.println("~~~~~~STARS~~~~~~");
+        for(Star star: starList.getAll())
+            System.out.println(star.getId() + ". " + star.getName() + ", " + star.getSideLength());
     }
 
     public void addCornerShape(Polygon polygon) {
-        cornerShapes.add(polygon);
+        switch (polygon.getClass().getName()) {
+            case "Square":
+                squareList.insert((Square) polygon);
+                break;
+            case "Rectangle":
+                rectangleList.insert((Rectangle) polygon);
+                break;
+            case "Star":
+                starList.insert((Star) polygon);
+                break;
+            default:
+                break;
+        }
     }
 
     public void printCornerShapes() {
-        for(Polygon polygon : cornerShapes)
+        for(Polygon polygon : getCornerShapes())
         {
             System.out.println("This is a " + polygon.getClass().getName() + " and it has " + polygon.getNumberOfCorners() + " corners");
         }
     }
 
     public String howMany(){
-        int nrSquares=0,nrRectangles=0,nrCircles=0;
-        for (Shape shape : shapes) {
-            switch (shape.getClass().getName()) {
-                case "Square":
-                    nrSquares++;
-                    break;
-                case "Rectangle":
-                    nrRectangles++;
-                    break;
-                case "Circle":
-                    nrCircles++;
-                    break;
-                default:
-                    break;
-            }
-        }
-        return "we've got " + nrSquares + " Squares," + nrRectangles + " Rectangles and " + nrCircles + " Circles";
+        return "we've got " + squareList.getAll().size() + " Squares," + rectangleList.getAll().size() + " Rectangles and " + circleList.getAll().size() + " Circles and " + starList.getAll().size() + " Stars";
     }
 
-    public static void saveShapes() {
-        try
-        {
-            FileOutputStream fos = new FileOutputStream("src//database.txt");
-            ObjectOutputStream out = new ObjectOutputStream(fos);//store data into file
-            out.writeObject(Canvas.getInstance());
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("I/O error: " + e.getMessage());
-        } catch (ClassCastException e) {
-            System.out.println("Class cast error: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("An unexpected error occurred: " + e.getMessage());
-        }
+    public static void saveShapes() throws SQLException {
+        myDatabase.disconnect();
     }
 
     public static void loadShapes() {
-        try {
-            FileInputStream fis = new FileInputStream("src//database.txt");
-            ObjectInputStream in = new ObjectInputStream(fis); // read stored data from file
-            uniqueCanvas = (Canvas)in.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("I/O error: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class not found: " + e.getMessage());
-        } catch (ClassCastException e) {
-            System.out.println("Class cast error: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("An unexpected error occurred: " + e.getMessage());
-        }
+        myDatabase.connect();
+        DatabaseInitializer.initialize(myDatabase);
     }
 }

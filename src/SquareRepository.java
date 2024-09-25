@@ -24,6 +24,7 @@ public class SquareRepository implements ShapeRepository<Square> {
         try {
             while (result.next()) {
                 squareList.add(new Square(result.getString("name"), result.getDouble("length")));
+                squareList.getLast().setId(result.getInt("id"));
             }
         }catch (Exception e){
             System.out.println("Couldn't get the list of squares due to an error!");

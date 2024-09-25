@@ -24,6 +24,7 @@ public class RectangleRepository implements ShapeRepository<Rectangle> {
         try {
             while (result.next()) {
                 rectangleList.add(new Rectangle(result.getString("name"), result.getDouble("length"),result.getDouble("width")));
+                rectangleList.getLast().setId(result.getInt("id"));
             }
         }catch (Exception e){
             System.out.println("Couldn't get the list of rectangles due to an error!");

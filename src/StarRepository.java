@@ -24,6 +24,7 @@ public class StarRepository implements ShapeRepository<Star> {
         try {
             while (result.next()) {
                 starList.add(new Star(result.getString("name"), result.getDouble("length")));
+                starList.getLast().setId(result.getInt("id"));
             }
         }catch (Exception e){
             System.out.println("Couldn't get the list of stars due to an error!");

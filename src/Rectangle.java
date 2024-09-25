@@ -7,7 +7,7 @@ public class Rectangle extends Shape implements Polygon
 
     public Rectangle(String name,double length,double width){
         this.length=length;
-        this.name=name;
+        this.setName(name);
         this.width=width;
     }
 
@@ -43,6 +43,6 @@ public class Rectangle extends Shape implements Polygon
 
     @Override
     public String toString(){
-        return "This is a "+ this.name +" and it has " +  numberOfSides + " sides, two of  " +length+ " centimeters, and two of  " + this.width + " centimeters";
+        return "This is a " + this.getClass().getName() + ", it's name is " + this.getName() +" and it has " +  numberOfSides + " sides, two of  " +length+ " centimeters, and two of  " + this.width + " centimeters";
     }
 }
