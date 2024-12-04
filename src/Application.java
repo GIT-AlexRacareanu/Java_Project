@@ -6,16 +6,12 @@ import java.util.Scanner;
 
 public final class Application {
 
-    private static final DatabaseConnector myDatabase = new DatabaseConnector();
     private static final Scanner input = new Scanner(System.in).useDelimiter("\n");//private feature
 
     public static void runApp() throws InterruptedException, IOException, ClassNotFoundException, SQLException {
-        myDatabase.connect();
-        DatabaseInitializer.initialize(myDatabase);
         Canvas.loadShapes();
         runMenu();
         Canvas.saveShapes();
-        myDatabase.disconnect();
     }
 
     public static void runMenu() throws InterruptedException, IOException, ClassNotFoundException {
@@ -63,10 +59,30 @@ public final class Application {
                 if (Canvas.getInstance().getShapes().isEmpty()) {
                     System.out.println("The list is empty! Try adding some shapes.");
                 } else{
-                    System.out.println("Your list is: ");
-                    Canvas.getInstance().printContentByName();
-                    System.out.println("Write the name of the one you want to delete: ");
-                    Canvas.getInstance().deleteShape(input.next());
+                    System.out.println("This is your list:");
+                    Canvas.getInstance().printContent();
+                    System.out.println("What kind of shape would you like to delete?(square,rectangle,circle or star)");
+                    switch (input.next()){
+                        case "square":
+                            System.out.println("what is the id of the square you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"square");
+                            break;
+                        case "rectangle":
+                            System.out.println("what is the id of the rectangle you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"rectangle");
+                            break;
+                        case "circle":
+                            System.out.println("what is the id of the circle you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"circle");
+                            break;
+                        case "star":
+                            System.out.println("what is the id of the star you want to delete?");
+                            Canvas.getInstance().deleteShape(input.nextInt(),"star");
+                            break;
+                        default:
+                            System.out.println("This kind of shape does not exist!");
+                            break;
+                    }
                 }
                 redirect();
                 break;
@@ -128,14 +144,14 @@ public final class Application {
           System.out.print("Write your choice: ");
         if(input.nextInt()==1) {
             System.out.print("write a query:");
-            result = myDatabase.executeQuery(input.next());
+            result = Canvas.myDatabase.executeQuery(input.next());
         }
           System.out.println("Would you like to print the result?");
           System.out.println("1.Yes");
           System.out.println("2.No");
           System.out.print("Write your choice: ");
         if(input.nextInt()==1)
-            myDatabase.printResult(result);
+            Canvas.myDatabase.printResult(result);
         redirect();
     }
 
@@ -147,7 +163,6 @@ public final class Application {
         System.out.println("introduce the length(centimeters):");
         double length = input.nextDouble();
         Canvas.getInstance().addShape(new Square(name,length));
-        Canvas.getInstance().addCornerShape(new Square(name,length));
         System.out.println("Shape added!");
         redirect();
     }
@@ -162,7 +177,6 @@ public final class Application {
         System.out.println("introduce the width(centimeters):");
         double width = input.nextDouble();
         Canvas.getInstance().addShape(new Rectangle(name,length,width));
-        Canvas.getInstance().addCornerShape(new Rectangle(name,length,width));
         System.out.println("Shape added");
         redirect();
     }
@@ -187,7 +201,6 @@ public final class Application {
         System.out.println("introduce the side length(centimeters):");
         double sideLength = input.nextDouble();
         Canvas.getInstance().addShape(new Star(name,sideLength));
-        Canvas.getInstance().addCornerShape(new Star(name,sideLength));
         System.out.println("Shape added");
         redirect();
     }

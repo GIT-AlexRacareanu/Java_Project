@@ -5,7 +5,7 @@ public class Star extends Shape implements Polygon
     private static final int numberOfCorners = 10;
 
     public Star(String name,double sideLength){
-        this.name=name;
+        this.setName(name);
         this.sideLength=sideLength;
     }
 
@@ -35,6 +35,6 @@ public class Star extends Shape implements Polygon
 
     @Override
     public String toString() {
-        return "This is a "+ this.name +" and it has " +  numberOfSides + " sides of " +sideLength+ " centimeters";
+        return "This is a " + this.getClass().getName() + ", it's name is " + this.getName() +" and it has " +  numberOfSides + " sides of " +sideLength+ " centimeters";
     }
 }

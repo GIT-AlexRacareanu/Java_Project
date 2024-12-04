@@ -5,9 +5,8 @@ public class Circle extends Shape
 
     public Circle(String name,double radius){
         this.radius=radius;
-        this.name=name;
+        this.setName(name);
     }
-
 
     public int getNumberOfSides() {
         return numberOfSides;
@@ -27,6 +26,6 @@ public class Circle extends Shape
 
     @Override
     public String toString(){
-        return "This is a " + this.name + " and it has a radius of " + this.radius + " centimeters";
+        return "This is a " + this.getClass().getName() + ", it's name is " + this.getName()+ " and it has a radius of " + this.radius + " centimeters";
     }
 }
